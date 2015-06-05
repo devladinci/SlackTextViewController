@@ -183,7 +183,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-        
+    
     // Invalidates this flag when the view appears
     self.textView.didNotResignFirstResponder = NO;
     
@@ -191,6 +191,9 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
         // Reloads any cached text
         [self slk_reloadTextView];
     }];
+    
+    self.textInputbarHC.constant = self.textInputbar.minimumInputbarHeight;
+    self.scrollViewHC.constant = [self slk_appropriateScrollViewHeight];
     
     // Helps laying out subviews with recently added constraints.
     [self.view layoutIfNeeded];
