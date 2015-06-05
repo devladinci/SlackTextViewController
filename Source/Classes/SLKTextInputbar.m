@@ -111,7 +111,7 @@
 
 - (CGSize)intrinsicContentSize
 {
-    return CGSizeMake(UIViewNoIntrinsicMetric, [self minimumInputbarHeight]);
+    return CGSizeMake(UIViewNoIntrinsicMetric, self.hidden ? 0 : 44.0);
 }
 
 + (BOOL)requiresConstraintBasedLayout
