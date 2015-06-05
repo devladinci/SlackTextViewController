@@ -183,7 +183,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+        
     // Invalidates this flag when the view appears
     self.textView.didNotResignFirstResponder = NO;
     
