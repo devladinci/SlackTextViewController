@@ -192,9 +192,6 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
         [self slk_reloadTextView];
     }];
     
-    self.textInputbarHC.constant = self.textInputbar.minimumInputbarHeight;
-    self.scrollViewHC.constant = [self slk_appropriateScrollViewHeight];
-    
     // Helps laying out subviews with recently added constraints.
     [self.view layoutIfNeeded];
 }
