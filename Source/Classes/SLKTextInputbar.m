@@ -346,6 +346,8 @@
 
 - (CGFloat)slk_appropriateRightButtonWidth
 {
+    self.rightButton.hidden = self.autoHideRightButton && (self.textView.text.length == 0);
+    
     if (self.autoHideRightButton) {
         if (self.textView.text.length == 0) {
             return 0.0;
