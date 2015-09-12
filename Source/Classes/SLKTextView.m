@@ -86,6 +86,24 @@ NSString * const SLKTextViewPastedItemData =                        @"SLKTextVie
     [self slk_registerNotifications];
     
     [self addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize)) options:NSKeyValueObservingOptionNew context:NULL];
+    
+    // Add gesture duting initialization, overwriting `gestures` method can lead to crash because during the dealloc gestures are being called in order to be removed.
+    [self addLoupeGesture];
+}
+
+- (void)addLoupeGesture {
+    NSArray *gestureRecognizers = [super gestureRecognizers];
+    
+    // Adds an aditional action to a private gesture to detect when the magnifying glass becomes visible
+    for (UIGestureRecognizer *gesture in gestureRecognizers) {
+        if ([gesture isMemberOfClass:NSClassFromString(@"UIVariableDelayLoupeGesture")]) {
+            
+            NSArray *targets = [gesture valueForKeyPath:@"_targets"];
+            if (targets.count > 0) {
+                [gesture addTarget:self action:@selector(slk_willShowLoupe:)];
+            }
+        }
+    }
 }
 
 
@@ -395,24 +413,6 @@ SLKPastableMediaType SLKPastableMediaTypeFromNSString(NSString *string)
 
 
 #pragma mark - UITextView Overrides
-
-- (NSArray *)gestureRecognizers
-{
-    NSArray *gestureRecognizers = [super gestureRecognizers];
-    
-    // Adds an aditional action to a private gesture to detect when the magnifying glass becomes visible
-    for (UIGestureRecognizer *gesture in gestureRecognizers) {
-        if ([gesture isMemberOfClass:NSClassFromString(@"UIVariableDelayLoupeGesture")]) {
-            
-            NSArray *targets = [gesture valueForKeyPath:@"_targets"];
-            if (targets.count > 0) {
-                [gesture addTarget:self action:@selector(slk_willShowLoupe:)];
-            }
-        }
-    }
-    
-    return gestureRecognizers;
-}
 
 - (void)setSelectedRange:(NSRange)selectedRange
 {
